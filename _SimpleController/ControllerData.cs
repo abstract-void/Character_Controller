@@ -5,9 +5,16 @@ namespace ProjectDew.CharacterController
 	using static ControllerEditorConstants;
 
 	[CreateAssetMenu(fileName = ControllerDataName, menuName = ControllerDataPath, order = ControllerDataOrder)]
-	public class ControllerData : ScriptableObject, IMoveData, IGravityData, IJumpData, ISlideData
+	public class ControllerData : ScriptableObject, IMoveData, IJumpData, ISlideData
 	{
-		[Header("Move")]
+		[SerializeField]
+		private MoveData moveData;
+		
+		[SerializeField]
+		private JumpData jumpData;
+		
+		[SerializeField]
+		private SlideData slideData;
 
 		[SerializeField]
 		private float moveSpeed = 7f;
@@ -16,17 +23,10 @@ namespace ProjectDew.CharacterController
 		private float controlRate = 0.02f;
 		
 		[SerializeField]
-		private float groundFriction = 100f;
-
-		[Header("Gravity")]
+		private float friction = 0.5f;
 		
 		[SerializeField]
-		private Vector3 gravity = new(0f, 30f, 0f); // slideGravity = 5f;
-		
-		[SerializeField]
-		private float airFriction = 0.5f;
-		
-		[Header("Jump")]
+		private Vector3 gravity = new(0f, 30f, 0f);
 		
 		[SerializeField]
 		private float jumpSpeed = 10f;
@@ -42,35 +42,31 @@ namespace ProjectDew.CharacterController
 
 		[SerializeField, Range(0, 10)]
 		private int maxJumpsAllowed = 1;
-
-		[Header("Slide")]
 		
 		[SerializeField]
 		private float slopeLimit = 30f;
 
 		#region Properties
 
-		public float MoveSpeed => moveSpeed;
+		public float MoveSpeed => (moveData != null) ? moveData.MoveSpeed : moveSpeed;
 
-		public float ControlRate => controlRate;
+		public float ControlRate => (moveData != null) ? moveData.ControlRate : controlRate;
 
-		public float SlopeLimit => slopeLimit;
+		public float Friction => (moveData != null) ? moveData.Friction : friction;
 
-		public float GroundFriction => groundFriction;
+		public Vector3 Gravity => (moveData != null) ? moveData.Gravity : gravity;
 
-		public Vector3 Gravity => gravity;
+		public float JumpSpeed => (jumpData != null) ? jumpData.JumpSpeed : jumpSpeed;
 
-		public float AirFriction => airFriction;
+		public float JumpDuration => (jumpData != null) ? jumpData.JumpDuration : jumpDuration;
 
-		public float JumpSpeed => jumpSpeed;
+		public float CeilingAngleLimit => (jumpData != null) ? jumpData.CeilingAngleLimit : ceilingAngleLimit;
 
-		public float JumpDuration => jumpDuration;
+		public float TimeBetweenJumps => (jumpData != null) ? jumpData.TimeBetweenJumps : timeBetweenJumps;
 
-		public float CeilingAngleLimit => ceilingAngleLimit;
+		public int MaxJumpsAllowed => (jumpData != null) ? jumpData.MaxJumpsAllowed : maxJumpsAllowed;
 
-		public float TimeBetweenJumps => timeBetweenJumps;
-
-		public int MaxJumpsAllowed => maxJumpsAllowed;
+		public float SlopeLimit => (slideData != null) ? slideData.SlopeLimit : slopeLimit;
 		
 		#endregion
 	}

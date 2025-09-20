@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace ProjectDew.CharacterController
 {
     public interface IMoveData
@@ -6,6 +8,8 @@ namespace ProjectDew.CharacterController
 
 		float ControlRate { get; }
 
-		float GroundFriction { get; }
+		float Friction { get; }
+
+		Vector3 Gravity { get; }
     }
 }

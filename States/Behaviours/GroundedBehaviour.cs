@@ -6,12 +6,12 @@ namespace ProjectDew.CharacterController
 	{
 		private readonly Controller controller;
 
-		private readonly ControllerData controllerData;
+		private readonly IMoveData moveData;
 
-		public GroundedBehaviour(Controller controller, ControllerData controllerData) : base(controller, controllerData)
+		public GroundedBehaviour(Controller controller, IMoveData moveData) : base(controller, moveData)
 		{
 			this.controller = controller;
-			this.controllerData = controllerData;
+			this.moveData = moveData;
 		}
 
 		protected override void CheckForGround()
@@ -24,7 +24,7 @@ namespace ProjectDew.CharacterController
 
 		protected override void AdjustVerticalMovement()
 		{
-			controller.Movement -= controller.Transform.up * (controllerData.Gravity.y * Time.deltaTime);
+			controller.Movement -= controller.Transform.up * (moveData.Gravity.y * Time.deltaTime);
 
 			Vector3 verticalMovement = controller.Movement.GetDot(controller.Transform.up);
 
@@ -36,6 +36,6 @@ namespace ProjectDew.CharacterController
 			controller.Movement = controller.Movement.RemoveDot(controller.Transform.up) + verticalMovement;
 		}
 
-        protected override void ApplyFriction() => controller.Movement = Vector3.MoveTowards(controller.Movement, Vector3.zero, controllerData.GroundFriction * Time.deltaTime);
+        protected override void ApplyFriction() => controller.Movement = Vector3.MoveTowards(controller.Movement, Vector3.zero, moveData.Friction * Time.deltaTime);
 	}
 }

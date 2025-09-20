@@ -1,6 +1,6 @@
 namespace ProjectDew.CharacterController
 {
-    public interface IJumpData : IGravityData
+    public interface IJumpData
     {
 		float JumpSpeed { get; }
 

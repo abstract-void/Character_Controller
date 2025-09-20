@@ -6,16 +6,16 @@ namespace ProjectDew.CharacterController
 	{
 		private readonly Controller controller;
 
-		private readonly ControllerData controllerData;
+		private readonly IJumpData jumpData;
 
 		public int NumberOfJumps { get; private set; }
 
 		public bool JumpWasInterrupted { get; private set; }
 
-		public JumpBehaviour(Controller controller, ControllerData controllerData) : base(controller, controllerData)
+		public JumpBehaviour(Controller controller, IMoveData moveData, IJumpData jumpData) : base(controller, moveData)
 		{
 			this.controller = controller;
-			this.controllerData = controllerData;
+			this.jumpData = jumpData;
 		}
 
 		public override void ExecuteFixed()
@@ -27,7 +27,7 @@ namespace ProjectDew.CharacterController
 		protected override void AdjustVerticalMovement()
 		{
 			controller.Movement = controller.Movement.RemoveDot(controller.Transform.up);
-			controller.Movement += controller.Transform.up * controllerData.JumpSpeed;
+			controller.Movement += controller.Transform.up * jumpData.JumpSpeed;
 		}
 
 		public void CheckForCeilingContact(Collision collision)
@@ -39,7 +39,7 @@ namespace ProjectDew.CharacterController
 			
 			float angle = Vector3.Angle(-controller.Transform.up, collision.contacts[0].normal);
 
-			if (angle < controllerData.CeilingAngleLimit)
+			if (angle < jumpData.CeilingAngleLimit)
 			{
 				JumpWasInterrupted = true;
 			}
@@ -47,9 +47,9 @@ namespace ProjectDew.CharacterController
 
 		public void IncreaseJumpCount(float pressDuration)
 		{
-			if (NumberOfJumps < controllerData.MaxJumpsAllowed)
+			if (NumberOfJumps < jumpData.MaxJumpsAllowed)
 			{
-				if (NumberOfJumps == 0 || pressDuration > controllerData.TimeBetweenJumps)
+				if (NumberOfJumps == 0 || pressDuration > jumpData.TimeBetweenJumps)
 				{
 					NumberOfJumps++;
 				}

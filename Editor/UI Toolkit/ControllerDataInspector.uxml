@@ -1,0 +1,37 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/Project%20Dew/Character%20Controller/Editor/UI%20Toolkit/ControllerStyle.uss?fileID=7433441132597879392&amp;guid=7158120f1a3ea9341960a58bd73f7823&amp;type=3#ControllerStyle" />
+    <ui:VisualElement name="move_container" class="container" style="flex-grow: 1;">
+        <ui:VisualElement name="move_asset_container" style="flex-grow: 1; flex-direction: row;">
+            <uie:PropertyField name="move_asset" binding-path="moveData" style="flex-grow: 1;" />
+            <ui:Button name="remove_move_asset_button" icon-image="project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=8300712400058098730&amp;guid=9b00c72784496704ca63f9c09fd4c418&amp;type=3#check-dash" class="icon icon_button" />
+        </ui:VisualElement>
+        <ui:VisualElement name="move_data_container" class="container" style="flex-grow: 1;">
+            <uie:PropertyField name="move_speed" binding-path="moveSpeed" />
+            <uie:PropertyField name="control_rate" binding-path="controlRate" />
+            <uie:PropertyField name="friction" binding-path="friction" />
+            <uie:PropertyField name="gravity" binding-path="gravity" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="jump_container" class="container" style="flex-grow: 1;">
+        <ui:VisualElement name="jump_asset_container" style="flex-grow: 1; flex-direction: row;">
+            <uie:PropertyField name="jump_asset" binding-path="jumpData" style="flex-grow: 1;" />
+            <ui:Button name="remove_jump_asset_button" icon-image="project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=8300712400058098730&amp;guid=9b00c72784496704ca63f9c09fd4c418&amp;type=3#check-dash" class="icon icon_button" />
+        </ui:VisualElement>
+        <ui:VisualElement name="jump_data_container" class="container" style="flex-grow: 1;">
+            <uie:PropertyField name="jump_speed" binding-path="jumpSpeed" />
+            <uie:PropertyField name="jump_duration" binding-path="jumpDuration" />
+            <uie:PropertyField name="ceiling_angle_limit" binding-path="ceilingAngleLimit" />
+            <uie:PropertyField name="time_between_jumps" binding-path="timeBetweenJumps" />
+            <uie:PropertyField name="max_jumps_allowed" binding-path="maxJumpsAllowed" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="slide_container" class="container" style="flex-grow: 1;">
+        <ui:VisualElement name="slide_asset_container" style="flex-grow: 1; flex-direction: row;">
+            <uie:PropertyField name="slide_asset" binding-path="slideData" style="flex-grow: 1;" />
+            <ui:Button name="remove_slide_asset_button" icon-image="project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=8300712400058098730&amp;guid=9b00c72784496704ca63f9c09fd4c418&amp;type=3#check-dash" class="icon icon_button" />
+        </ui:VisualElement>
+        <ui:VisualElement name="slide_data_container" class="container" style="flex-grow: 1;">
+            <uie:PropertyField name="slope_limit" binding-path="slopeLimit" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -6,12 +6,12 @@ namespace ProjectDew.CharacterController
     {
         private readonly Controller controller;
 
-        private readonly ControllerData controllerData;
+        private readonly IMoveData moveData;
 
-        public SlideBehaviour(Controller controller, ControllerData controllerData) : base(controller, controllerData)
+        public SlideBehaviour(Controller controller, IMoveData moveData) : base(controller, moveData)
         {
             this.controller = controller;
-            this.controllerData = controllerData;
+			this.moveData = moveData;
         }
 
 		protected override void CheckForGround()
@@ -33,12 +33,12 @@ namespace ProjectDew.CharacterController
 				controllerDirection = controller.Raycaster.HitCollider.transform.TransformDirection(controller.Direction).normalized;
 			}
 
-			controller.Movement = slideDirection * controllerData.Gravity.y.Half() + controllerDirection.GetDot(Vector3.right) * controllerData.MoveSpeed;
+			controller.Movement = slideDirection * moveData.Gravity.y.Half() + controllerDirection.GetDot(Vector3.right) * moveData.MoveSpeed;
         }
 
         protected override void AdjustVerticalMovement()
         {
-			controller.Movement -= controller.Transform.up * (controllerData.Gravity.y * Time.deltaTime);
+			controller.Movement -= controller.Transform.up * (moveData.Gravity.y * Time.deltaTime);
 
             controller.Movement = Vector3.ProjectOnPlane(controller.Movement, controller.Raycaster.HitNormal);
 
@@ -49,7 +49,7 @@ namespace ProjectDew.CharacterController
         
             Vector3 slideDirection = Vector3.ProjectOnPlane(-controller.Transform.up, controller.Raycaster.HitNormal).normalized;
 
-            controller.Movement += slideDirection * (controllerData.Gravity.y * Time.deltaTime);
+            controller.Movement += slideDirection * (moveData.Gravity.y * Time.deltaTime);
         }
     }
 }

@@ -10,6 +10,12 @@ namespace ProjectDew.CharacterController
 
 		[SerializeField]
 		private ControllerData controllerData;
+
+		[SerializeField]
+		private MoveData groundedData;
+
+		[SerializeField]
+		private MoveData slideData;
 		
 		[SerializeField]
 		private Transform cameraTransform;
@@ -112,7 +118,14 @@ namespace ProjectDew.CharacterController
 
 		private void Start()
 		{
-			stateMachine = new(states, this, controllerData);
+			stateMachine = new(states, this);
+
+			stateMachine.AddGroundedBehaviour(groundedData);
+			stateMachine.AddSlideBehaviour(slideData);
+
+			stateMachine.AddJumpBehaviour(controllerData, controllerData);
+			stateMachine.AddRiseBehaviour(controllerData);
+			stateMachine.AddFallBehaviour(controllerData);
 			
 			raycaster = new(this, ColliderHandler.Size.y.Half());
 

@@ -7,12 +7,12 @@ namespace ProjectDew.CharacterController
 	{
 		private readonly Controller controller;
 
-		private readonly ControllerData controllerData;
+		private readonly IMoveData moveData;
 
-		public ControllerBehaviour(Controller controller, ControllerData controllerData)
+		public ControllerBehaviour(Controller controller, IMoveData moveData)
 		{
 			this.controller = controller;
-			this.controllerData = controllerData;
+			this.moveData = moveData;
 		}
 
 		public override void Execute() { }
@@ -40,15 +40,15 @@ namespace ProjectDew.CharacterController
 		{
 			Vector3 horizontalMovement = controller.Movement.RemoveDot(controller.Transform.up);
 			
-			horizontalMovement += controller.Direction * (controllerData.MoveSpeed * Time.deltaTime * controllerData.ControlRate * Math.Hundred);
-			horizontalMovement = Vector3.ClampMagnitude(horizontalMovement, controllerData.MoveSpeed);
+			horizontalMovement += controller.Direction * (moveData.MoveSpeed * Time.deltaTime * moveData.ControlRate * Math.Hundred);
+			horizontalMovement = Vector3.ClampMagnitude(horizontalMovement, moveData.MoveSpeed);
 			
 			controller.Movement = horizontalMovement + controller.Movement.GetDot(controller.Transform.up);
 		}
 
-		protected virtual void ApplyFriction() => controller.Movement = Vector3.MoveTowards(controller.Movement, Vector3.zero, controllerData.AirFriction * Time.deltaTime);
+		protected virtual void ApplyFriction() => controller.Movement = Vector3.MoveTowards(controller.Movement, Vector3.zero, moveData.Friction * Time.deltaTime);
 
-		protected virtual void AdjustVerticalMovement() => controller.Movement -= controller.Transform.up * (controllerData.Gravity.y * Time.deltaTime);
+		protected virtual void AdjustVerticalMovement() => controller.Movement -= controller.Transform.up * (moveData.Gravity.y * Time.deltaTime);
 
 		protected virtual void ApplyMovement()
 		{
@@ -60,7 +60,7 @@ namespace ProjectDew.CharacterController
 			
 			Vector3 velocityAdjustment = controller.Transform.up * (controller.Raycaster.DistanceToHit / Time.fixedDeltaTime); // Keep ground contact
 
-			controller.Rigidbody.linearVelocity = controller.Movement + controllerData.MoveSpeed * controller.Direction + velocityAdjustment;
+			controller.Rigidbody.linearVelocity = controller.Movement + moveData.MoveSpeed * controller.Direction + velocityAdjustment;
 		}
 	}
 }

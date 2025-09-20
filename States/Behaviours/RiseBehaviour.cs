@@ -6,17 +6,17 @@ namespace ProjectDew.CharacterController
 	{
 		private readonly Controller controller;
 
-		private readonly ControllerData controllerData;
+		private readonly IMoveData moveData;
 
-		public RiseBehaviour(Controller controller, ControllerData controllerData) : base(controller, controllerData)
+		public RiseBehaviour(Controller controller, IMoveData moveData) : base(controller, moveData)
 		{
 			this.controller = controller;
-			this.controllerData = controllerData;
+			this.moveData = moveData;
 		}
 
 		public override void Execute()
 		{
-			Vector3 velocity = controllerData.MoveSpeed * controller.Direction;//Vector3 velocity = controller.Velocity;
+			Vector3 velocity = moveData.MoveSpeed * controller.Direction;
 
 			if (velocity.sqrMagnitude >= Math.Zero && controller.Movement.sqrMagnitude > Math.Zero)
 			{

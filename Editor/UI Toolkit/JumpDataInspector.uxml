@@ -1,0 +1,10 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/Project%20Dew/Character%20Controller/Editor/UI%20Toolkit/ControllerStyle.uss?fileID=7433441132597879392&amp;guid=7158120f1a3ea9341960a58bd73f7823&amp;type=3#ControllerStyle" />
+    <ui:VisualElement name="jump_container" class="container" style="flex-grow: 1;">
+        <uie:PropertyField name="jump_speed" binding-path="jumpSpeed" />
+        <uie:PropertyField name="jump_duration" binding-path="jumpDuration" />
+        <uie:PropertyField name="ceiling_angle_limit" binding-path="ceilingAngleLimit" />
+        <uie:PropertyField name="time_between_jumps" binding-path="timeBetweenJumps" />
+        <uie:PropertyField name="max_jumps_allowed" binding-path="maxJumpsAllowed" />
+    </ui:VisualElement>
+</ui:UXML>

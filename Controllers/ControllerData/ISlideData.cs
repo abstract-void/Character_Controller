@@ -1,6 +1,6 @@
 namespace ProjectDew.CharacterController
 {
-    public interface ISlideData : IGravityData
+    public interface ISlideData
     {
 		float SlopeLimit { get; }
     }

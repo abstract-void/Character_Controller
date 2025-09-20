@@ -6,12 +6,9 @@ namespace ProjectDew.CharacterController
 	{
 		private readonly Controller controller;
 
-		private readonly ControllerData controllerData;
-
-		public FallBehaviour(Controller controller, ControllerData controllerData) : base(controller, controllerData)
+		public FallBehaviour(Controller controller, IMoveData moveData) : base(controller, moveData)
 		{
 			this.controller = controller;
-			this.controllerData = controllerData;
 		}
 
 		public override void Execute()

@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb4a4b8110281774aa6b5145f281c792, type: 3}
   m_Name: ControllerData
   m_EditorClassIdentifier: CharacterControllerAssembly::ProjectDew.CharacterController.ControllerData
+  moveData: {fileID: 11400000, guid: a116d61f23a156d4690e29b2f3874b8c, type: 2}
+  jumpData: {fileID: 11400000, guid: 2e45170b112253947a949b77f83151a8, type: 2}
+  slideData: {fileID: 11400000, guid: 21581156a03d0d14d8742ceb41af4e01, type: 2}
   moveSpeed: 7
   controlRate: 0.02
-  groundFriction: 100
+  friction: 0.5
   gravity: {x: 0, y: 30, z: 0}
-  airFriction: 0.5
   jumpSpeed: 10
   jumpDuration: 0.2
   ceilingAngleLimit: 10
