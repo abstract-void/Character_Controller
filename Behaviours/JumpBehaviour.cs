@@ -1,8 +1,9 @@
+using System;
 using UnityEngine;
 
 namespace ProjectDew.CharacterController
 {
-	public class JumpBehaviour : ControllerBehaviour
+	public class JumpBehaviour : ControllerBehaviour, IDisposable
 	{
 		private readonly Controller controller;
 
@@ -16,6 +17,15 @@ namespace ProjectDew.CharacterController
 		{
 			this.controller = controller;
 			this.jumpData = jumpData;
+
+			controller.CollisionEnter += CheckForCeilingContact;
+			controller.CollisionStay += CheckForCeilingContact;
+		}
+
+		public void Dispose()
+		{
+			controller.CollisionEnter -= CheckForCeilingContact;
+			controller.CollisionStay -= CheckForCeilingContact;
 		}
 
 		public override void ExecuteFixed()

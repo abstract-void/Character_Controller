@@ -5,12 +5,17 @@ namespace ProjectDew.CharacterController
         private readonly PlayerInput input;
 
         public MoveAction Move { get; private set; }
+
         public LookAction Look { get; private set; }
         
         public ButtonAction Run { get; private set; }
+
         public ButtonAction Jump { get; private set; }
+
         public ButtonAction Crouch { get; private set; }
+
         public ButtonAction Interact { get; private set; }
+
         public ButtonAction LockCamera { get; private set; }
 
         public PlayerInputReader()

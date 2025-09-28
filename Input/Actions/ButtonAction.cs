@@ -13,7 +13,7 @@ namespace ProjectDew.CharacterController
 
 		public virtual float TimeHeld { get; protected set; }
 
-        public virtual bool IsPressed { get; protected set; }
+        public virtual int TotalPresses { get; protected set; }
 
         public virtual bool IsActive { get; protected set; }
 
@@ -33,7 +33,7 @@ namespace ProjectDew.CharacterController
 			}
         }
 
-        public virtual void HoldButton(float timeLimit)
+        public virtual void HoldButton(float timeLimit = float.MaxValue)
 		{
 			if (!IsHeld || !IsActive)
 			{
@@ -56,19 +56,21 @@ namespace ProjectDew.CharacterController
 			}
 		}
 
+		public virtual void ResetPresses() => TotalPresses = 0;
+
 		private void Press()
 		{
 			TimeHeld = 0;
 			
 			if (!IsHeld)
 			{
-				IsPressed = true;
 				IsActive = true;
+
+				TotalPresses++;
 
 				Pressed?.Invoke();
 			}
 
-			IsPressed = false;
 			IsHeld = true;
 		}
 

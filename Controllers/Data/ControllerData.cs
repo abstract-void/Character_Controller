@@ -5,7 +5,7 @@ namespace ProjectDew.CharacterController
 	using static ControllerEditorConstants;
 
 	[CreateAssetMenu(fileName = ControllerDataName, menuName = ControllerDataPath, order = ControllerDataOrder)]
-	public class ControllerData : ScriptableObject, IMoveData, IJumpData, ISlideData
+	public class ControllerData : ScriptableObject, IMoveData, IJumpData, ISlideData, IInteractData
 	{
 		[SerializeField]
 		private MoveData moveData;
@@ -15,6 +15,9 @@ namespace ProjectDew.CharacterController
 		
 		[SerializeField]
 		private SlideData slideData;
+		
+		[SerializeField]
+		private InteractData interactData;
 
 		[SerializeField]
 		private float moveSpeed = 7f;
@@ -45,6 +48,9 @@ namespace ProjectDew.CharacterController
 		
 		[SerializeField]
 		private float slopeLimit = 30f;
+		
+		[SerializeField]
+		private LayerMask interactableLayer;
 
 		#region Properties
 
@@ -67,6 +73,8 @@ namespace ProjectDew.CharacterController
 		public int MaxJumpsAllowed => (jumpData != null) ? jumpData.MaxJumpsAllowed : maxJumpsAllowed;
 
 		public float SlopeLimit => (slideData != null) ? slideData.SlopeLimit : slopeLimit;
+
+		public LayerMask InteractableLayer => (interactData != null) ? interactData.InteractableLayer : interactableLayer;
 		
 		#endregion
 	}

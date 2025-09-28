@@ -34,4 +34,13 @@
             <uie:PropertyField name="slope_limit" binding-path="slopeLimit" />
         </ui:VisualElement>
     </ui:VisualElement>
+    <ui:VisualElement name="interact_container" class="container" style="flex-grow: 1;">
+        <ui:VisualElement name="interact_asset_container" style="flex-grow: 1; flex-direction: row;">
+            <uie:PropertyField name="interact_asset" binding-path="interactData" style="flex-grow: 1;" />
+            <ui:Button name="remove_interact_asset_button" icon-image="project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=8300712400058098730&amp;guid=9b00c72784496704ca63f9c09fd4c418&amp;type=3#check-dash" class="icon icon_button" />
+        </ui:VisualElement>
+        <ui:VisualElement name="interact_data_container" class="container" style="flex-grow: 1;">
+            <uie:PropertyField name="interactable_layer" binding-path="interactableLayer" />
+        </ui:VisualElement>
+    </ui:VisualElement>
 </ui:UXML>

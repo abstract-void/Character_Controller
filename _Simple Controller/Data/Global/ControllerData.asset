@@ -15,6 +15,7 @@ MonoBehaviour:
   moveData: {fileID: 11400000, guid: a116d61f23a156d4690e29b2f3874b8c, type: 2}
   jumpData: {fileID: 11400000, guid: 2e45170b112253947a949b77f83151a8, type: 2}
   slideData: {fileID: 11400000, guid: 21581156a03d0d14d8742ceb41af4e01, type: 2}
+  interactData: {fileID: 11400000, guid: a278fd03809e5354c853649516c5672d, type: 2}
   moveSpeed: 7
   controlRate: 0.02
   friction: 0.5
@@ -25,3 +26,6 @@ MonoBehaviour:
   timeBetweenJumps: 0.05
   maxJumpsAllowed: 1
   slopeLimit: 30
+  interactableLayer:
+    serializedVersion: 2
+    m_Bits: 0

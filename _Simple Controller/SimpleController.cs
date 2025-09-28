@@ -3,7 +3,7 @@ using ProjectDew.FSM;
 
 namespace ProjectDew.CharacterController
 {
-	public class SimpleController : Controller, IMoveController, IGravityController, IJumpController, ISlideController
+	public class SimpleController : Controller, IMoveController, IGravityController, IRunController, IJumpController, ICrouchController, ISlideController
 	{
 		[SerializeField]
 		private State[] states;
@@ -13,6 +13,12 @@ namespace ProjectDew.CharacterController
 
 		[SerializeField]
 		private MoveData groundedData;
+
+		[SerializeField]
+		private MoveData runData;
+
+		[SerializeField]
+		private MoveData crouchData;
 
 		[SerializeField]
 		private MoveData slideData;
@@ -66,11 +72,11 @@ namespace ProjectDew.CharacterController
 
 		public bool BeginLanding => raycaster.HasDetectedHit;
 
-		public bool BeginSliding => Vector3.Angle(raycaster.HitNormal, Transform.up) > controllerData.SlopeLimit;
-
 		public bool BeginRising => Vector3.Dot(Movement, Transform.up.normalized) > Math.Zero;
 
 		public bool BeginFalling => Vector3.Dot(Movement, Transform.up.normalized) < Math.Zero;
+
+		public bool BeginRunning => input.Run.IsHeld;
 
 		public bool BeginJumping
 		{
@@ -84,6 +90,12 @@ namespace ProjectDew.CharacterController
 				return false;
 			}
 		}
+
+		public bool BeginCrouching { get; private set; }
+
+		public bool BeginSliding => Vector3.Angle(raycaster.HitNormal, Transform.up) > controllerData.SlopeLimit;
+
+		public bool BeginInteracting { get; private set; }
 		
 		public bool JumpWasInterrupted => stateMachine.Jump.JumpWasInterrupted;
 
@@ -93,9 +105,15 @@ namespace ProjectDew.CharacterController
 
 		public bool IsFalling => stateMachine.IsCurrentState("Falling");
 
+		public bool IsRunning => stateMachine.IsCurrentState("Running");
+
 		public bool IsJumping => stateMachine.IsCurrentState("Jumping");
 
+		public bool IsCrouching => stateMachine.IsCurrentState("Crouching");
+
 		public bool IsSliding => stateMachine.IsCurrentState("Sliding");
+
+		public bool IsInteracting => stateMachine.IsCurrentState("Interacting");
 
 		private void Awake()
 		{
@@ -119,18 +137,23 @@ namespace ProjectDew.CharacterController
 		private void Start()
 		{
 			stateMachine = new(states, this);
-
-			stateMachine.AddGroundedBehaviour(groundedData);
-			stateMachine.AddSlideBehaviour(slideData);
-
-			stateMachine.AddJumpBehaviour(controllerData, controllerData);
-			stateMachine.AddRiseBehaviour(controllerData);
-			stateMachine.AddFallBehaviour(controllerData);
 			
 			raycaster = new(this, ColliderHandler.Size.y.Half());
 
+			stateMachine.AddGroundedBehaviour(groundedData);
+			stateMachine.AddRunBehaviour(runData);
+			stateMachine.AddJumpBehaviour(controllerData, controllerData);
+			stateMachine.AddCrouchBehaviour(crouchData);
+			stateMachine.AddSlideBehaviour(slideData);
+			stateMachine.AddRiseBehaviour(controllerData);
+			stateMachine.AddFallBehaviour(controllerData);
+			stateMachine.AddInteractBehaviour(controllerData);
+			
 			stateMachine.SetStateEventHandler += ResetJumpCount;
+
 			input.Jump.Completed += IncreaseJumpCount;
+			input.Crouch.Pressed += SwitchCrouchState;
+			input.Interact.Pressed += CheckInteractState;
 		}
 		
 		private void Update()
@@ -151,19 +174,29 @@ namespace ProjectDew.CharacterController
 
 		private void OnDestroy()
 		{
-			input.Jump.Completed -= IncreaseJumpCount;
 			stateMachine.SetStateEventHandler -= ResetJumpCount;
+
+			stateMachine.Dispose();
+
+			input.Jump.Completed -= IncreaseJumpCount;
+			input.Crouch.Pressed -= SwitchCrouchState;
+			input.Interact.Pressed -= CheckInteractState;
 
 			input.Dispose();
 		}
-	
-		private void OnCollisionEnter(Collision collision) => stateMachine.Jump.CheckForCeilingContact(collision);
-
-		private void OnCollisionStay(Collision collision) => stateMachine.Jump.CheckForCeilingContact(collision);
 
 		private void CheckInput()
 		{
-			input.Jump.HoldButton(controllerData.JumpDuration);
+			switch (stateMachine.CurrentState.ID)
+			{
+				case "Jumping":
+					input.Jump.HoldButton(controllerData.JumpDuration);
+					break;
+
+				case "Running":
+					input.Run.HoldButton();
+					break;
+			}
 		}
 
 		private void IncreaseJumpCount(float pressDuration)
@@ -181,5 +214,9 @@ namespace ProjectDew.CharacterController
 				stateMachine.Jump.ResetJumpCount();
 			}
 		}
+
+		private void SwitchCrouchState() => BeginCrouching = !BeginCrouching;
+
+		private void CheckInteractState() => BeginInteracting = stateMachine.Interact.Interact();
 	}
 }
