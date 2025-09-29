@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace ProjectDew.CharacterController
 {
-	public class GroundedBehaviour : ControllerBehaviour
+	public class GroundedBehaviour : MoveBehaviour
 	{
 		private readonly Controller controller;
 
@@ -16,7 +16,7 @@ namespace ProjectDew.CharacterController
 
 		protected override void CheckForGround()
 		{
-			float colliderHeight = controller.ColliderHandler.Size.y * controller.Transform.localScale.y;
+			float colliderHeight = controller.ColliderHandler.Size.y;
 			float rayLength = colliderHeight.Half() + colliderHeight.Quarter();
 			
 			controller.Raycaster.CastRay(controller.ColliderHandler.WorldCenter, Vector3.down, rayLength);

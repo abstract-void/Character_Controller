@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace ProjectDew.CharacterController
 {
-	public class RiseBehaviour : ControllerBehaviour
+	public class RiseBehaviour : MoveBehaviour
 	{
 		private readonly Controller controller;
 

@@ -29,7 +29,7 @@ namespace ProjectDew.CharacterController
 
         public virtual Vector3 BoundsCenter => Collider.bounds.center;
 
-        public virtual Vector3 WorldCenter => new Vector3(Collider.bounds.center.x, Collider.bounds.center.y - StepHeight.Half(), Collider.bounds.center.z);
+        public virtual Vector3 WorldCenter => new Vector3(Bounds.center.x, Bounds.center.y - (StepHeight * tr.localScale.y).Half(), Bounds.center.z);
 
         public virtual Vector3 LocalCenter => tr.InverseTransformPoint(WorldCenter);
 
@@ -41,7 +41,7 @@ namespace ProjectDew.CharacterController
 
         public virtual float StepHeight => stepHeight;
 
-        protected abstract void RecalculateColliderDimensions();
+        public abstract void RecalculateColliderDimensions();
 
         protected virtual void OnRecalculateDimensions()
         {
@@ -52,11 +52,6 @@ namespace ProjectDew.CharacterController
         {
 			tr = transform;
             Collider = GetComponent<Collider>();
-        }
-
-        private void Start()
-        {
-            RecalculateColliderDimensions();
         }
 
         private void OnValidate()

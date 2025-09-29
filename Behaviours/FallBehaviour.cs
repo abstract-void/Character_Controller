@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace ProjectDew.CharacterController
 {
-	public class FallBehaviour : ControllerBehaviour
+	public class FallBehaviour : MoveBehaviour
 	{
 		private readonly Controller controller;
 

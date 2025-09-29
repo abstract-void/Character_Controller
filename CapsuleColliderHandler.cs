@@ -19,7 +19,7 @@ namespace ProjectDew.CharacterController
 			}
 		}
 
-		protected override void RecalculateColliderDimensions()
+		public override void RecalculateColliderDimensions()
 		{
 			if (Collider == null)
 			{
@@ -31,11 +31,12 @@ namespace ProjectDew.CharacterController
 				capsuleCollider = (CapsuleCollider)Collider;
 			}
 
-			capsuleCollider.height = BaseSize.y - StepHeight;
+			float colliderHeight = BaseSize.y - StepHeight;
 			
-			float adjustedColliderHeight = BoundsSize.y - BASE_COLLIDER_HEIGHT;
+			float adjustedColliderHeight = colliderHeight - BASE_COLLIDER_HEIGHT;
 			float colliderCenterY = adjustedColliderHeight.Half() + StepHeight;
 
+			capsuleCollider.height = colliderHeight;
 			capsuleCollider.radius = Math.ClampMax(BaseSize.x.Half(), BoundsSize.y.Half());
 			capsuleCollider.center = Offset + new Vector3(Math.Zero, colliderCenterY, Math.Zero);
 

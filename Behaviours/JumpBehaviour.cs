@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ProjectDew.CharacterController
 {
-	public class JumpBehaviour : ControllerBehaviour, IDisposable
+	public class JumpBehaviour : MoveBehaviour, IDisposable
 	{
 		private readonly Controller controller;
 

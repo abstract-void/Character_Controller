@@ -3,13 +3,13 @@ using ProjectDew.FSM;
 
 namespace ProjectDew.CharacterController
 {
-	public abstract class ControllerBehaviour : StateBehaviour
+	public abstract class MoveBehaviour : StateBehaviour
 	{
 		private readonly Controller controller;
 
-		private readonly IMoveData moveData;
+		private IMoveData moveData;
 
-		public ControllerBehaviour(Controller controller, IMoveData moveData)
+		public MoveBehaviour(Controller controller, IMoveData moveData)
 		{
 			this.controller = controller;
 			this.moveData = moveData;
@@ -30,11 +30,9 @@ namespace ProjectDew.CharacterController
 			ApplyMovement();
 		}
 
-		protected virtual void CheckForGround()
-		{
-			float rayLength = controller.ColliderHandler.Size.y.Half();
-			controller.Raycaster.CastRay(controller.ColliderHandler.WorldCenter, Vector3.down, rayLength);
-		}
+		public void UpdateMoveData(IMoveData moveData) => this.moveData = moveData;
+
+		protected virtual void CheckForGround() => controller.Raycaster.CastRay(controller.ColliderHandler.WorldCenter, Vector3.down);
 
 		protected virtual void AdjustHorizontalMovement()
 		{

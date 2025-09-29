@@ -12,8 +12,6 @@ namespace ProjectDew.CharacterController
 
         private RaycastHit hitInfo;
 
-        private float rayLength;
-
         public Collider HitCollider => hitInfo.collider;
 
         public Vector3 HitNormal => hitInfo.normal;
@@ -22,11 +20,7 @@ namespace ProjectDew.CharacterController
 
         public bool HasDetectedHit => hitInfo.collider != null;
 
-        public float RayLength
-        {
-            get => rayLength;
-            set => rayLength = value * (Math.One + SAFETY_DISTANCE_FACTOR);
-        }
+        public float RayLength { get; private set; }
 
         public Raycaster(Controller controller, float baseRayLength)
         {
@@ -67,7 +61,9 @@ namespace ProjectDew.CharacterController
                 direction.Normalize();
             }
 
-            Physics.Raycast(origin, direction, out hitInfo, length, layerMask, QueryTriggerInteraction.Ignore);
+			float adjustedLength = length * (Math.One + SAFETY_DISTANCE_FACTOR);
+
+            Physics.Raycast(origin, direction, out hitInfo, adjustedLength, layerMask, QueryTriggerInteraction.Ignore);
         }
     }
 }

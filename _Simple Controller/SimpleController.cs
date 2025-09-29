@@ -123,6 +123,8 @@ namespace ProjectDew.CharacterController
 
 			colliderHandler = GetComponent<ColliderHandler>();
 			
+			raycaster = new(this, ColliderHandler.Size.y.Half());
+			
 			input = new();
 
 			Rigidbody.freezeRotation = true;
@@ -137,8 +139,6 @@ namespace ProjectDew.CharacterController
 		private void Start()
 		{
 			stateMachine = new(states, this);
-			
-			raycaster = new(this, ColliderHandler.Size.y.Half());
 
 			stateMachine.AddGroundedBehaviour(groundedData);
 			stateMachine.AddRunBehaviour(runData);
@@ -154,6 +154,8 @@ namespace ProjectDew.CharacterController
 			input.Jump.Completed += IncreaseJumpCount;
 			input.Crouch.Pressed += SwitchCrouchState;
 			input.Interact.Pressed += CheckInteractState;
+			
+			ColliderHandler.RecalculateColliderDimensions();
 		}
 		
 		private void Update()
