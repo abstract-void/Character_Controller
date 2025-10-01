@@ -18,9 +18,13 @@ namespace ProjectDew.CharacterController
         public const string SlideDataPath = "Scriptable Objects/Project Dew/Character Controller/Slide Data";
         public const int SlideDataOrder = BaseOrder + 53;
 		
+        public const string AnimateDataName = "Animate Data";
+        public const string AnimateDataPath = "Scriptable Objects/Project Dew/Character Controller/Animate Data";
+        public const int AnimateDataOrder = BaseOrder + 101;
+		
         public const string SurfaceDataName = "Surface Data";
         public const string SurfaceDataPath = "Scriptable Objects/Project Dew/Character Controller/Surface Data";
-        public const int SurfaceDataOrder = BaseOrder + 101;
+        public const int SurfaceDataOrder = BaseOrder + 151;
 		
 		private const int BaseOrder = 200;
     }

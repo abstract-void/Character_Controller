@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace ProjectDew.CharacterController
 {
+	[RequireComponent(typeof(Collider))]
     public abstract class ColliderHandler : MonoBehaviour
     {
         private const float MIN_COLLIDER_RANGE = 0.01f;
@@ -25,21 +26,17 @@ namespace ProjectDew.CharacterController
 
 		public virtual Bounds Bounds => Collider.bounds;
 
-        public virtual Vector3 BoundsSize => Collider.bounds.size;
-
-        public virtual Vector3 BoundsCenter => Collider.bounds.center;
+        public virtual Vector3 Size => new Vector3(Bounds.size.x, Bounds.size.y + StepHeight * tr.localScale.y, Bounds.size.z);
 
         public virtual Vector3 WorldCenter => new Vector3(Bounds.center.x, Bounds.center.y - (StepHeight * tr.localScale.y).Half(), Bounds.center.z);
 
         public virtual Vector3 LocalCenter => tr.InverseTransformPoint(WorldCenter);
 
-        public virtual Vector3 Size => new Vector3(BoundsSize.x, BoundsSize.y + StepHeight * tr.localScale.y, BoundsSize.z);
+        protected virtual Vector3 BaseSize => colliderSize;
 
-        public virtual Vector3 BaseSize => colliderSize;
+        protected virtual Vector3 Offset => colliderOffset;
 
-        public virtual Vector3 Offset => colliderOffset;
-
-        public virtual float StepHeight => stepHeight;
+        protected virtual float StepHeight => stepHeight;
 
         public abstract void RecalculateColliderDimensions();
 

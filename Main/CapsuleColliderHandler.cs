@@ -10,7 +10,7 @@ namespace ProjectDew.CharacterController
 
 		private CapsuleCollider capsuleCollider;
 
-		public override float StepHeight
+		protected override float StepHeight
 		{
 			get
 			{
@@ -37,7 +37,7 @@ namespace ProjectDew.CharacterController
 			float colliderCenterY = adjustedColliderHeight.Half() + StepHeight;
 
 			capsuleCollider.height = colliderHeight;
-			capsuleCollider.radius = Math.ClampMax(BaseSize.x.Half(), BoundsSize.y.Half());
+			capsuleCollider.radius = Math.ClampMax(BaseSize.x.Half(), Collider.bounds.size.y.Half());
 			capsuleCollider.center = Offset + new Vector3(Math.Zero, colliderCenterY, Math.Zero);
 
 			OnRecalculateDimensions();

@@ -3,13 +3,14 @@ using ProjectDew.FSM;
 
 namespace ProjectDew.CharacterController
 {
+	[RequireComponent(typeof(Animator))]
 	public class SimpleController : Controller, IMoveController, IGravityController, IRunController, IJumpController, ICrouchController, ISlideController
 	{
 		[SerializeField]
-		private State[] states;
+		private ControllerData controllerData;
 
 		[SerializeField]
-		private ControllerData controllerData;
+		private StateMachineData stateMachineData;
 
 		[SerializeField]
 		private MoveData groundedData;
@@ -22,21 +23,31 @@ namespace ProjectDew.CharacterController
 
 		[SerializeField]
 		private MoveData slideData;
+
+		[SerializeField]
+		private AnimateData animateData;
 		
 		[SerializeField]
 		private Transform cameraTransform;
 
+		[SerializeField]
+		private float rotationSpeed;
+
 		private Transform tr;
 
 		private Rigidbody rb;
+
+		private Animator animator;
+
+		private ColliderHandler colliderHandler;
+
+		private Raycaster raycaster;
 		
 		private SimpleStateMachine stateMachine;
 		
 		private PlayerInputReader input;
 
-		private ColliderHandler colliderHandler;
-
-		private Raycaster raycaster;
+		private Quaternion targetRotation;
 
 		public override Transform Transform => tr;
 
@@ -54,14 +65,14 @@ namespace ProjectDew.CharacterController
 
 				if (cameraTransform == null)
 				{
-					direction = Transform.right * input.Move.Direction.x + Transform.forward * input.Move.Direction.y;
+					direction = new Vector3(input.Move.Direction.x, 0, input.Move.Direction.y);
 				}
 				else
 				{
 					Vector3 projectedDirectionX = Vector3.ProjectOnPlane(cameraTransform.right, Transform.up).normalized * input.Move.Direction.x;
-					Vector3 projectedDirectionY = Vector3.ProjectOnPlane(cameraTransform.forward, Transform.up).normalized * input.Move.Direction.y;
+					Vector3 projectedDirectionZ = Vector3.ProjectOnPlane(cameraTransform.forward, Transform.up).normalized * input.Move.Direction.y;
 
-					direction = projectedDirectionX + projectedDirectionY;
+					direction = projectedDirectionX + projectedDirectionZ;
 				}
 
 				return direction.magnitude > Math.One ? direction.normalized : direction;
@@ -121,6 +132,8 @@ namespace ProjectDew.CharacterController
 
 			rb = GetComponent<Rigidbody>();
 
+			animator = GetComponent<Animator>();
+
 			colliderHandler = GetComponent<ColliderHandler>();
 			
 			raycaster = new(this, ColliderHandler.Size.y.Half());
@@ -129,6 +142,8 @@ namespace ProjectDew.CharacterController
 
 			Rigidbody.freezeRotation = true;
 			Rigidbody.useGravity = false;
+
+			targetRotation = Rigidbody.rotation;
 		}
 
 		private void OnEnable()
@@ -138,7 +153,7 @@ namespace ProjectDew.CharacterController
 
 		private void Start()
 		{
-			stateMachine = new(states, this);
+			stateMachine = new(stateMachineData, this, animator, animateData);
 
 			stateMachine.AddGroundedBehaviour(groundedData);
 			stateMachine.AddRunBehaviour(runData);
@@ -166,6 +181,7 @@ namespace ProjectDew.CharacterController
 
 		private void FixedUpdate()
 		{
+			Rotate();
 			stateMachine.ExecuteFixed();
 		}
 
@@ -199,6 +215,16 @@ namespace ProjectDew.CharacterController
 					input.Run.HoldButton();
 					break;
 			}
+		}
+
+		private void Rotate()
+		{
+			if (Direction.magnitude > 0)
+			{
+				targetRotation = Quaternion.LookRotation (Direction);
+			}
+
+			Rigidbody.rotation = Quaternion.Slerp (Rigidbody.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 		}
 
 		private void IncreaseJumpCount(float pressDuration)

@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace ProjectDew.CharacterController
 {
+	[RequireComponent(typeof(Rigidbody))]
 	public abstract class Controller : MonoBehaviour
 	{
 		public event Action<Collision> CollisionEnter;

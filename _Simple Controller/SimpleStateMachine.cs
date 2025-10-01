@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using ProjectDew.FSM;
 
 namespace ProjectDew.CharacterController
@@ -6,6 +7,10 @@ namespace ProjectDew.CharacterController
 	public class SimpleStateMachine : StateMachine, IDisposable
 	{
 		private readonly SimpleController controller;
+
+		private readonly Animator animator;
+
+		private readonly AnimateData animateData;
 
 		public GroundedBehaviour Grounded { get; private set; }
 
@@ -23,9 +28,12 @@ namespace ProjectDew.CharacterController
 
 		public InteractBehaviour Interact { get; private set; }
 
-		public SimpleStateMachine(State[] states, SimpleController controller) : base(states)
+		public SimpleStateMachine(StateMachineData stateMachineData, SimpleController controller, Animator animator, AnimateData animateData) : base(stateMachineData)
 		{
 			this.controller = controller;
+			this.animator = animator;
+			this.animateData = animateData;
+
 			InitializeStates();
 		}
 
@@ -38,51 +46,51 @@ namespace ProjectDew.CharacterController
 		public void AddGroundedBehaviour(IMoveData moveData)
 		{
 			Grounded = new GroundedBehaviour(controller, moveData);
-			AddBehaviour("Grounded", Grounded);
+			AddBehaviours("Grounded", Grounded, new AnimateMoveBehaviour(controller, animator, "Move", animateData));
 		}
 
 		public void AddRunBehaviour(IMoveData moveData)
 		{
 			Run = new RunBehaviour(controller, moveData);
-			AddBehaviour("Running", Run);
+			AddBehaviours("Running", Run, new AnimateMoveBehaviour(controller, animator, "Move", animateData));
 		}
 
 		public void AddJumpBehaviour(IMoveData moveData, IJumpData jumpData)
 		{
 			Jump = new JumpBehaviour(controller, moveData, jumpData);
-			AddBehaviour("Jumping", Jump);
+			AddBehaviours("Jumping", Jump, new AnimateBehaviour(animator, "Jump", animateData));
 		}
 
 		public void AddCrouchBehaviour(IMoveData moveData)
 		{
 			Crouch = new CrouchBehaviour(controller, moveData);
-			AddBehaviour("Crouching", Crouch);
+			AddBehaviours("Crouching", Crouch, new AnimateBehaviour(animator, "Crouch", animateData));
 		}
 
 		public void AddSlideBehaviour(IMoveData moveData)
 		{
 			Slide = new SlideBehaviour(controller, moveData);
-			AddBehaviour("Sliding", Slide);
+			AddBehaviours("Sliding", Slide, new AnimateBehaviour(animator, "Slide", animateData));
 		}
 
 		public void AddRiseBehaviour(IMoveData moveData)
 		{
 			Rise = new RiseBehaviour(controller, moveData);
 
-			AddBehaviour("Rising", Rise);
+			AddBehaviours("Rising", Rise, new AnimateBehaviour(animator, "Hover", animateData));
 			AddBehaviour("Sliding", Rise);
 		}
 
 		public void AddFallBehaviour(IMoveData moveData)
 		{
 			Fall = new FallBehaviour(controller, moveData);
-			AddBehaviour("Falling", Fall);
+			AddBehaviours("Falling", Fall, new AnimateBehaviour(animator, "Hover", animateData));
 		}
 
 		public void AddInteractBehaviour(IInteractData interactData)
 		{
 			Interact = new InteractBehaviour(controller, interactData);
-			AddBehaviour("Interacting", Interact);
+			AddBehaviours("Interacting", Interact, new AnimateBehaviour(animator, "Interact", animateData));
 		}
 
 		private void InitializeStates()

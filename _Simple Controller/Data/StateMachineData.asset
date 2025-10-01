@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf4d8d6b93fa14d459cd364826537668, type: 3}
+  m_Name: StateMachineData
+  m_EditorClassIdentifier: FSMAssembly::ProjectDew.FSM.StateMachineData
+  states:
+  - {fileID: 11400000, guid: a40f6806ff219b3479319be7debc3c07, type: 2}
+  - {fileID: 11400000, guid: b25a1d039fd8388419018de3c5c0c477, type: 2}
+  - {fileID: 11400000, guid: bd8fb3d3669d04d44a910ff4a439dd3d, type: 2}
+  - {fileID: 11400000, guid: 7324f6bff47318d4ab4ef8468b394d92, type: 2}
+  - {fileID: 11400000, guid: 64f5a9b6d5d1832418d493db1078cd90, type: 2}
+  - {fileID: 11400000, guid: 0b1e32af5d3d7f94c8f341c1fd92186d, type: 2}
+  - {fileID: 11400000, guid: 3f0d7f87170f0a440beccf2d82b336da, type: 2}
+  - {fileID: 11400000, guid: 06399961a8510dc43957572d8f5da5cd, type: 2}
+  initialState: {fileID: 11400000, guid: bd8fb3d3669d04d44a910ff4a439dd3d, type: 2}
