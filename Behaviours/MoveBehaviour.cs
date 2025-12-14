@@ -15,8 +15,6 @@ namespace ProjectDew.CharacterController
 			this.moveData = moveData;
 		}
 
-		public override void Execute() { }
-
 		public override void ExecuteFixed()
 		{
 			CheckForGround();

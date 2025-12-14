@@ -10,7 +10,7 @@ namespace ProjectDew.CharacterController
 
         public Vector2 Direction { get; private set; }
 
-        public LookAction(string id) : base(id) { }
+        public LookAction(string name) : base(name) { }
 
         public override void DetectInput(InputAction.CallbackContext context)
         {

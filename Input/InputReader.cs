@@ -11,36 +11,43 @@ namespace ProjectDew.CharacterController
             Pressed
         }
 
+		private readonly IInputActionCollection2 inputActions;
+
+		public InputReader(IInputActionCollection2 inputActions)
+		{
+			this.inputActions = inputActions;
+		}
+
         public abstract void Enable();
 
         public abstract void Disable();
 
         public abstract void Dispose();
 
-        public void AddCallback(IInputActionCollection2 input, PlayerAction action) => AddCallback(input, action.ID, action, DetectionMode.Complete);
+        public void AddCallback(PlayerAction action) => AddCallback(action.Name, action, DetectionMode.Complete);
 
-        public void AddCallback(IInputActionCollection2 input, PlayerAction action, DetectionMode detectionMode) => AddCallback(input, action.ID, action, detectionMode);
+        public void AddCallback(PlayerAction action, DetectionMode detectionMode) => AddCallback(action.Name, action, detectionMode);
 
-        public void AddCallback(IInputActionCollection2 input, string actionName, PlayerAction action) => AddCallback(input, actionName, action, DetectionMode.Complete);
+        public void AddCallback(string actionName, PlayerAction action) => AddCallback(actionName, action, DetectionMode.Complete);
 
-        public void AddCallback(IInputActionCollection2 input, string actionName, PlayerAction action, DetectionMode detectionMode)
+        public void AddCallback(string actionName, PlayerAction action, DetectionMode detectionMode)
         {
-            input.FindAction(actionName).started += action.DetectInput;
-            input.FindAction(actionName).canceled += action.DetectInput;
+            inputActions.FindAction(actionName).started += action.DetectInput;
+            inputActions.FindAction(actionName).canceled += action.DetectInput;
             
             if (detectionMode == DetectionMode.Complete)
             {
-                input.FindAction(actionName).performed += action.DetectInput;
+                inputActions.FindAction(actionName).performed += action.DetectInput;
             }
         }
 
-        public void RemoveCallback(IInputActionCollection2 input, PlayerAction action) => RemoveCallback(input, action.ID, action);
+        public void RemoveCallback(PlayerAction action) => RemoveCallback(action.Name, action);
 
-        public void RemoveCallback(IInputActionCollection2 input, string actionName, PlayerAction action)
+        public void RemoveCallback(string actionName, PlayerAction action)
         {
-            input.FindAction(actionName).started -= action.DetectInput;
-            input.FindAction(actionName).canceled -= action.DetectInput;
-            input.FindAction(actionName).performed -= action.DetectInput;
+            inputActions.FindAction(actionName).started -= action.DetectInput;
+            inputActions.FindAction(actionName).canceled -= action.DetectInput;
+            inputActions.FindAction(actionName).performed -= action.DetectInput;
         }
     }
 }

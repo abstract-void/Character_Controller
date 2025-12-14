@@ -7,31 +7,10 @@ namespace ProjectDew.CharacterController
 	public class SimpleController : Controller, IMoveController, IGravityController, IRunController, IJumpController, ICrouchController, ISlideController
 	{
 		[SerializeField]
-		private ControllerData controllerData;
-
-		[SerializeField]
-		private StateMachineData stateMachineData;
-
-		[SerializeField]
-		private MoveData groundedData;
-
-		[SerializeField]
-		private MoveData runData;
-
-		[SerializeField]
-		private MoveData crouchData;
-
-		[SerializeField]
-		private MoveData slideData;
-
-		[SerializeField]
-		private AnimateData animateData;
+		private SimpleControllerData data;
 		
 		[SerializeField]
 		private Transform cameraTransform;
-
-		[SerializeField]
-		private float rotationSpeed;
 
 		private Transform tr;
 
@@ -45,7 +24,7 @@ namespace ProjectDew.CharacterController
 		
 		private SimpleStateMachine stateMachine;
 		
-		private PlayerInputReader input;
+		private SimpleInputReader input;
 
 		private Quaternion targetRotation;
 
@@ -93,9 +72,9 @@ namespace ProjectDew.CharacterController
 		{
 			get
 			{
-				if (input.Jump.IsActive && stateMachine.Jump.NumberOfJumps < controllerData.MaxJumpsAllowed)
+				if (input.Jump.IsActive && stateMachine.Jump.NumberOfJumps < data.ControllerData.MaxJumpsAllowed)
 				{
-					return stateMachine.Jump.NumberOfJumps == 0 || input.Jump.TimeHeld > controllerData.TimeBetweenJumps;
+					return stateMachine.Jump.NumberOfJumps == 0 || input.Jump.TimeHeld > data.ControllerData.TimeBetweenJumps;
 				}
 
 				return false;
@@ -104,7 +83,7 @@ namespace ProjectDew.CharacterController
 
 		public bool BeginCrouching { get; private set; }
 
-		public bool BeginSliding => Vector3.Angle(raycaster.HitNormal, Transform.up) > controllerData.SlopeLimit;
+		public bool BeginSliding => Vector3.Angle(raycaster.HitNormal, Transform.up) > data.ControllerData.SlopeLimit;
 
 		public bool BeginInteracting { get; private set; }
 		
@@ -138,7 +117,7 @@ namespace ProjectDew.CharacterController
 			
 			raycaster = new(this, ColliderHandler.Size.y.Half());
 			
-			input = new();
+			input = new(data.InputData);
 
 			Rigidbody.freezeRotation = true;
 			Rigidbody.useGravity = false;
@@ -153,16 +132,16 @@ namespace ProjectDew.CharacterController
 
 		private void Start()
 		{
-			stateMachine = new(stateMachineData, this, animator, animateData);
+			stateMachine = new(data.StateMachineData, this, animator, data.AnimateData);
 
-			stateMachine.AddGroundedBehaviour(groundedData);
-			stateMachine.AddRunBehaviour(runData);
-			stateMachine.AddJumpBehaviour(controllerData, controllerData);
-			stateMachine.AddCrouchBehaviour(crouchData);
-			stateMachine.AddSlideBehaviour(slideData);
-			stateMachine.AddRiseBehaviour(controllerData);
-			stateMachine.AddFallBehaviour(controllerData);
-			stateMachine.AddInteractBehaviour(controllerData);
+			stateMachine.AddGroundedBehaviour(data.GroundedData);
+			stateMachine.AddRunBehaviour(data.RunData);
+			stateMachine.AddJumpBehaviour(data.ControllerData, data.ControllerData);
+			stateMachine.AddCrouchBehaviour(data.CrouchData);
+			stateMachine.AddSlideBehaviour(data.SlideData);
+			stateMachine.AddRiseBehaviour(data.ControllerData);
+			stateMachine.AddFallBehaviour(data.ControllerData);
+			stateMachine.AddInteractBehaviour(data.ControllerData);
 			
 			stateMachine.SetStateEventHandler += ResetJumpCount;
 
@@ -208,7 +187,7 @@ namespace ProjectDew.CharacterController
 			switch (stateMachine.CurrentState.ID)
 			{
 				case "Jumping":
-					input.Jump.HoldButton(controllerData.JumpDuration);
+					input.Jump.HoldButton(data.ControllerData.JumpDuration);
 					break;
 
 				case "Running":
@@ -224,7 +203,7 @@ namespace ProjectDew.CharacterController
 				targetRotation = Quaternion.LookRotation (Direction);
 			}
 
-			Rigidbody.rotation = Quaternion.Slerp (Rigidbody.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+			Rigidbody.rotation = Quaternion.Slerp (Rigidbody.rotation, targetRotation, data.RotationSpeed * Time.deltaTime);
 		}
 
 		private void IncreaseJumpCount(float pressDuration)

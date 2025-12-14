@@ -64,7 +64,7 @@ namespace ProjectDew.CharacterController
 		public void AddCrouchBehaviour(IMoveData moveData)
 		{
 			Crouch = new CrouchBehaviour(controller, moveData);
-			AddBehaviours("Crouching", Crouch, new AnimateBehaviour(animator, "Crouch", animateData));
+			AddBehaviours("Crouching", Crouch, new AnimateMoveBehaviour(controller, animator, "Crouch", animateData));
 		}
 
 		public void AddSlideBehaviour(IMoveData moveData)

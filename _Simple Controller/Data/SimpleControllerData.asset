@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 660b51e1061bbab43a5e3aa20f55a893, type: 3}
+  m_Name: SimpleControllerData
+  m_EditorClassIdentifier: CharacterControllerAssembly::ProjectDew.CharacterController.SimpleControllerData
+  inputData: {fileID: 11400000, guid: b13ca44f6f2332d458eef4e30945a273, type: 2}
+  controllerData: {fileID: 11400000, guid: ff64a851ac2b8554ab004eef28b80142, type: 2}
+  stateMachineData: {fileID: 11400000, guid: 1bcdd259b4dff0043bb54de3d04092ba, type: 2}
+  groundedData: {fileID: 11400000, guid: b4ecb63dd46eeeb4c93e20139002250e, type: 2}
+  runData: {fileID: 11400000, guid: 40d7ea1371641c44eb2da7a6d10e1769, type: 2}
+  crouchData: {fileID: 11400000, guid: eca814e1252c93349bd371b7a345a0a4, type: 2}
+  slideData: {fileID: 11400000, guid: 7cbbaa6aebe1ec24dbb405acb280de75, type: 2}
+  animateData: {fileID: 11400000, guid: 0f33939069bccb04aab9ead79e721692, type: 2}
+  rotationSpeed: 9

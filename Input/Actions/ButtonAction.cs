@@ -19,7 +19,7 @@ namespace ProjectDew.CharacterController
 
         public virtual bool IsHeld { get; protected set; }
 
-        public ButtonAction(string id) : base(id) { }
+        public ButtonAction(string name) : base(name) { }
 
         public override void DetectInput(InputAction.CallbackContext context)
         {

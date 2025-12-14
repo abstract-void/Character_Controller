@@ -11,6 +11,12 @@ namespace ProjectDew.CharacterController
 			this.controller = controller;
 		}
 
-		public override void ExecuteFixed () => Animator.SetFloat("Speed", controller.Rigidbody.linearVelocity.magnitude);
+		public override void ExecuteFixed()
+		{
+			if (Animator.runtimeAnimatorController != null)
+			{
+				Animator.SetFloat("Speed", controller.Rigidbody.linearVelocity.magnitude);
+			}
+		}
     }
 }

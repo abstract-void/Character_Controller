@@ -4,11 +4,11 @@ namespace ProjectDew.CharacterController
 {
     public abstract class PlayerAction
     {
-        public string ID { get; }
+        public string Name { get; }
 
-        public PlayerAction(string id)
+        public PlayerAction(string name)
         {
-            ID = id;
+            Name = name;
         }
 
         public abstract void DetectInput(InputAction.CallbackContext context);

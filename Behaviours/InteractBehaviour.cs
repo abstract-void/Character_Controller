@@ -33,8 +33,6 @@ namespace ProjectDew.CharacterController
 			controller.TriggerExit -= RemoveInteractableObject;
 		}
 
-		public override void Execute() { }
-
 		public bool Interact() => ThereAreInteractableObjects && Interact(interactableObjects[^1]);
 
 		public bool Interact(InteractableObject interactableObject)

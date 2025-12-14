@@ -20,6 +20,11 @@ namespace ProjectDew.CharacterController
 
 		public override void Set ()
 		{
+			if (Animator.runtimeAnimatorController == null)
+			{
+				return;
+			}
+
 			AnimatorStateInfo animatorInfo = Animator.GetCurrentAnimatorStateInfo(0);
 
 			if (AnimationHash != animatorInfo.shortNameHash && AnimationHash != animatorInfo.fullPathHash)
@@ -27,7 +32,5 @@ namespace ProjectDew.CharacterController
 				Animator.CrossFade(AnimationHash, AnimateData.TransitionDuration, AnimateData.Layer, AnimateData.TransitionOffset, AnimateData.TransitionTime);
 			}
 		}
-
-		public override void Execute () { }
     }
 }

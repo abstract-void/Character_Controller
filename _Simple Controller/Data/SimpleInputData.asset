@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e9d311cea29ff34f8b13c9b325a8158, type: 3}
+  m_Name: SimpleInputData
+  m_EditorClassIdentifier: CharacterControllerAssembly::ProjectDew.CharacterController.SimpleInputData
+  inputActions: {fileID: -944628639613478452, guid: 00ee16ca694b7a1469050fd26a9039ef, type: 3}
+  moveAction: {fileID: -1680190386980627800, guid: 00ee16ca694b7a1469050fd26a9039ef, type: 3}
+  lookAction: {fileID: -5630151704836100654, guid: 00ee16ca694b7a1469050fd26a9039ef, type: 3}
+  runAction: {fileID: -7471211009204490832, guid: 00ee16ca694b7a1469050fd26a9039ef, type: 3}
+  jumpAction: {fileID: -2099379676528639254, guid: 00ee16ca694b7a1469050fd26a9039ef, type: 3}
+  crouchAction: {fileID: 7040659881675835329, guid: 00ee16ca694b7a1469050fd26a9039ef, type: 3}
+  interactAction: {fileID: 1781555164194001046, guid: 00ee16ca694b7a1469050fd26a9039ef, type: 3}
+  lockCameraAction: {fileID: -1990153054156685171, guid: 00ee16ca694b7a1469050fd26a9039ef, type: 3}
