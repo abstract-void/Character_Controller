@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: CharacterControllerAssembly::ProjectDew.CharacterController.SimpleControllerData
   inputData: {fileID: 11400000, guid: b13ca44f6f2332d458eef4e30945a273, type: 2}
   controllerData: {fileID: 11400000, guid: ff64a851ac2b8554ab004eef28b80142, type: 2}
-  stateMachineData: {fileID: 11400000, guid: 1bcdd259b4dff0043bb54de3d04092ba, type: 2}
+  stateMachineData: {fileID: 11400000, guid: ac5ca2569766e6f429b427fb42f8776c, type: 2}
   groundedData: {fileID: 11400000, guid: b4ecb63dd46eeeb4c93e20139002250e, type: 2}
   runData: {fileID: 11400000, guid: 40d7ea1371641c44eb2da7a6d10e1769, type: 2}
   crouchData: {fileID: 11400000, guid: eca814e1252c93349bd371b7a345a0a4, type: 2}

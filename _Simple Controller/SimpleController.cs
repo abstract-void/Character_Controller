@@ -4,7 +4,7 @@ using ProjectDew.FSM;
 namespace ProjectDew.CharacterController
 {
 	[RequireComponent(typeof(Animator))]
-	public class SimpleController : Controller, IMoveController, IGravityController, IRunController, IJumpController, ICrouchController, ISlideController
+	public class SimpleController : Controller, IStatefulObject, IMoveController, IGravityController, IRunController, IJumpController, ICrouchController, ISlideController
 	{
 		[SerializeField]
 		private SimpleControllerData data;
@@ -214,7 +214,7 @@ namespace ProjectDew.CharacterController
 			}
 		}
 
-		private void ResetJumpCount(State state)
+		private void ResetJumpCount(IState state)
 		{
 			if (state.ID == "Grounded")
 			{

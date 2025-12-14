@@ -1,5 +1,4 @@
 using UnityEngine;
-using ProjectDew.FSM;
 
 namespace ProjectDew.CharacterController
 {
@@ -13,7 +12,7 @@ namespace ProjectDew.CharacterController
 		private ControllerData controllerData;
 
 		[SerializeField]
-		private StateMachineData stateMachineData;
+		private SimpleStateMachineData stateMachineData;
 
 		[SerializeField]
 		private MoveData groundedData;
@@ -37,7 +36,7 @@ namespace ProjectDew.CharacterController
 
 		public ControllerData ControllerData => controllerData;
 
-		public StateMachineData StateMachineData => stateMachineData;
+		public SimpleStateMachineData StateMachineData => stateMachineData;
 
 		public MoveData GroundedData => groundedData;
 
